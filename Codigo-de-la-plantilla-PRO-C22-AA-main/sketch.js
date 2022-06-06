@@ -6,7 +6,7 @@ var engine, world, backgroundImg;
 
 var canvas, angle, tower, ground;
 var cannon, cannonBase;
-
+var cannonBall;
 function preload() {
   backgroundImg = loadImage("./assets/background.gif");
   towerImage = loadImage("./assets/tower.png");
@@ -18,7 +18,7 @@ function setup() {
   canvas = createCanvas(1200, 600);
   engine = Engine.create();
   world = engine.world;
-  
+  var angle = 20;
   var options = {
     isStatic: true
   }
@@ -29,22 +29,26 @@ function setup() {
   tower = Bodies.rectangle(160, 350, 160, 310, options);
   World.add(world, tower);
 
-  cannon = new Cannon(160, 135, 170, 170, 45);
+  cannon = new Cannon(80, 75, 170, 170, angle);
+
+  cannonBall = new Cannonball(cannon.x,cannon.y);
+  
 }
 
 function draw() {
-  //image(backgroundImg,0,0,1200,600);
-  background(backgroundImg);
+  background(189);
+  image(backgroundImg,0,0,1200,600);
+  
   Engine.update(engine);
 
   
   rect(ground.position.x, ground.position.y, width * 2, 1);
   
   cannon.display();
+  cannonBall.display();
 
   push();
   imageMode(CENTER);
   image(towerImage,tower.position.x, tower.position.y, 160, 310);
   pop();  
- 
 }
